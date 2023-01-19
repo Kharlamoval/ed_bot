@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import requests
 
 
@@ -7,8 +8,6 @@ def DayMarketAlor(apiServer, symbol):
     return requests.get(url=f'{apiServer}/md/v2/Securities/{symbol}/quotes')
 
 ed = DayMarketAlor(apiServer,'MOEX:EDH3').json()
-
-
 
 
 def DayMarcetPriceYahooFinance(Tiker):
@@ -32,11 +31,12 @@ eurusd = DayMarcetPriceYahooFinance('eurusd=X')
 spred = int((eurusd - ed[0]['last_price'])*10000)
 
 
-def send_msg(text):
+def edit_msg(text):
     token = "5886218730:AAHgUBVQJg4V9t_bomUnsCHi4BFgtGLISac"
     chat_id = "-1001854452864"
-    url_req = "https://api.telegram.org/bot" + token + "/sendMessage" + "?chat_id=" + chat_id + "&text=" + text
+    message_id = 16
+    url_req = "https://api.telegram.org/bot" + token + "/editMessageText" + "?chat_id=" + chat_id + "&text=" + text + "&message_id=" + str(message_id)
     results = requests.get(url_req)
-   
+  
  
-send_msg(str(spred) +str('pt') + str(' EURUSD') +'\nФ: ' + str(round(eurusd, 4)) + ';' + ' \nМ: ' + str(ed[0]['last_price']))
+edit_msg(str(spred) +str('pt') + str(' EURUSD') +'\nФ: ' + str(round(eurusd, 4)) + ';' + ' \nМ: ' + str(ed[0]['last_price']))

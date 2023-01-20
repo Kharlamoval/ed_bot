@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
 import requests
-
+import time
 
 apiServer = 'https://api.alor.ru'
 def DayMarketAlor(apiServer, symbol):
@@ -9,11 +8,14 @@ def DayMarketAlor(apiServer, symbol):
 
 ed = DayMarketAlor(apiServer,'MOEX:EDH3').json()
 
+seconds_ed = ed[0]['last_price_timestamp']
+time_ed = time.strftime('%H:%M:%S %d.%m.%y',time.localtime(seconds_ed))
+
 
 def DayMarcetPriceYahooFinance(Tiker):
     
     session = requests.session()
-    # -------- заголовки для URL запроса
+   
     headers = 'Mozilla/5.0 ' \
               '(Windows NT 10.0; WOW64) ' \
               'AppleWebKit/537.36' \
@@ -24,10 +26,15 @@ def DayMarcetPriceYahooFinance(Tiker):
     link = f"https://query2.finance.yahoo.com/v7/finance/quote?symbols={Tiker}"
 
     response = session.get(link, headers={'User-Agent': headers})
-    #print(response.json()['quoteResponse']['result'][0]['regularMarketPrice'])
-    return response.json()['quoteResponse']['result'][0]['regularMarketPrice']
-   
-eurusd = DayMarcetPriceYahooFinance('eurusd=X')
+   # print(response.json()['quoteResponse'])
+    return response.json()['quoteResponse']['result'][0]
+    
+eurusd = DayMarcetPriceYahooFinance('eurusd=X')['regularMarketPrice']
+seconds_eurusd = DayMarcetPriceYahooFinance('eurusd=X')['regularMarketTime']
+time_eurusd = time.strftime('%H:%M:%S %d.%m.%y',time.localtime(seconds_eurusd))
+
+
+
 spred = int((eurusd - ed[0]['last_price'])*10000)
 
 
@@ -39,4 +46,5 @@ def edit_msg(text):
     results = requests.get(url_req)
   
  
-edit_msg(str(spred) +str('pt') + str(' EURUSD') +'\nФ: ' + str(round(eurusd, 4)) + ';' + ' \nМ: ' + str(ed[0]['last_price']))
+edit_msg(str(spred) + 'pt' + '\n%F0%9F%87%B7%F0%9F%87%BA ' + str(ed[0]['last_price']) + str (' [')+ str(time_ed)+ str(']')+ '\n%F0%9F%87%AA%F0%9F%87%BA '+ str(round(eurusd, 4)) + str (' [')+ str(time_eurusd)+ str(']'))
+

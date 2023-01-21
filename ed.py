@@ -42,9 +42,8 @@ def edit_msg(text):
     token = "5886218730:AAHgUBVQJg4V9t_bomUnsCHi4BFgtGLISac"
     chat_id = "-1001854452864"
     message_id = 16
-    url_req = "https://api.telegram.org/bot" + token + "/editMessageText" + "?chat_id=" + chat_id + "&text=" + text + "&message_id=" + str(message_id)
+    url_req = "https://api.telegram.org/bot" + token + "/editMessageText" + "?chat_id=" + chat_id + "&text=" + text + "&parse_mode=Markdown"+ "&message_id=" + str(message_id)
     results = requests.get(url_req)
   
 time.strftime('%H:%M:%S %d.%m.%y',time.localtime())
-edit_msg(str(spred) + 'pt' + str(' [') + str(time.strftime('%H:%M:%S %d.%m.%y',time.localtime()))+ str(']') + '\n%F0%9F%87%B7%F0%9F%87%BA ' + str(ed[0]['last_price']) + str (' [')+ str(time_ed)+ str(']')+ '\n%F0%9F%87%AA%F0%9F%87%BA '+ str(round(eurusd, 4)) + str (' [')+ str(time_eurusd)+ str(']'))
-
+edit_msg(str('*') + str(spred)  + 'pt' +str('*') + '\n%F0%9F%87%B7%F0%9F%87%BA ' +str('*')+ str(ed[0]['last_price']) +str('*')+ str (' (')+ str(time_ed)+ str(')')+ '\n%F0%9F%87%AA%F0%9F%87%BA '+str('*')+str(round(eurusd, 4)) +str('*')+ str (' (')+ str(time_eurusd)+ str(')'))
